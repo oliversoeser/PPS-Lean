@@ -20,8 +20,12 @@ theorem imp_iff_or : (a → b) ↔ (¬a ∨ b) :=
 -- Theorem 1.2
 theorem contrapos : (a → b) ↔ (¬b → ¬a) :=
   Iff.intro
-    sorry
-    sorry
+    (fun (h₀ : a → b) => Classical.byCases
+      (fun (h₁ : a) => fun (h₂ : ¬b) => absurd (h₀ h₁) h₂)
+      (fun (h₁ : ¬a) => fun _ => h₁))
+    (fun (h₀ : ¬b → ¬a) => Classical.byCases
+      (fun (h₁ : b) => fun _ => h₁)
+      (fun (h₁ : ¬b) => fun (h₂ : a) => absurd h₂ (h₀ h₁)))
 
 -- Theorem 1.3
 theorem not_or_iff : ¬(a ∨ b) ↔ ¬a ∧ ¬b :=
