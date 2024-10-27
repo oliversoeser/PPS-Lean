@@ -2,11 +2,6 @@
 
 variable (a b : Prop)
 
-#check Or.intro_left
-#check Or.intro_right
-#check Classical.byCases
-#check Or.elim
-
 -- Theorem 1.1
 theorem imp_iff_or : (a → b) ↔ (¬a ∨ b) :=
   Iff.intro
@@ -30,5 +25,8 @@ theorem contrapos : (a → b) ↔ (¬b → ¬a) :=
 -- Theorem 1.3
 theorem not_or_iff : ¬(a ∨ b) ↔ ¬a ∧ ¬b :=
   Iff.intro
-    sorry
-    sorry
+    (fun h₀ : ¬(a ∨ b) =>
+      ⟨fun h₁ : a => h₀ (Or.inl h₁),
+      fun h₁ : b => h₀ (Or.inr h₁)⟩)
+    (fun h₀ : ¬a ∧ ¬b =>
+      (fun h₁ : a ∨ b => Or.elim h₁ h₀.left h₀.right))
