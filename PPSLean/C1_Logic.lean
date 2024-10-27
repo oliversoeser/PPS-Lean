@@ -1,22 +1,19 @@
+-- Week 1: Chapter 1, Logic
+
 import Mathlib.Data.Set.Basic
 
-section
-
-variable (α : Type)
 variable (a b : Prop)
 
-#check Set α
-
-#check a ↔ b
-
-theorem theorem_1_1 : (a → b) ↔ (¬a ∨ b) :=
+-- Theorem 1.1
+theorem imp_iff_or : (a → b) ↔ (¬a ∨ b) :=
   Iff.intro
     (fun (f : a → b) => sorry)
     (fun (h : ¬a ∨ b) => sorry)
 
-theorem theorem_1_2 : (a → b) ↔ (¬b → ¬a) :=
+-- Theorem 1.2
+theorem contrapos : (a → b) ↔ (¬b → ¬a) :=
   sorry
 
-
-
-end
+-- Theorem 1.3
+theorem not_or_iff : ¬(a ∨ b) ↔ ¬a ∨ ¬b :=
+  sorry
