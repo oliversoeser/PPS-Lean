@@ -34,7 +34,9 @@ theorem add_cancel_left : x + y = x + z ↔ y = z :=
     _ = z := by rw [add_zero])
     (fun h => by rw [h])
 theorem add_id_unique : x + y = x → y = 0 :=
-  sorry
+  fun h₀ : x + y = x =>
+    have h₁ : x + y = x + 0 := by rw [h₀, add_zero]
+    (add_cancel_left F x y 0).mp h₁
 theorem add_id_inv : x + y = 0 → x = -y :=
   sorry
 theorem neg_neg_eq : -(-x) = x :=
