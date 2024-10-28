@@ -21,7 +21,18 @@ variable (x y z : F)
 
 -- Proposition 2.1
 theorem add_cancel_left : x + y = x + z ↔ y = z :=
-  sorry
+  Iff.intro
+    (fun h : x + y = x + z => calc
+    y = y + 0 := by rw [add_comm, zero_add]
+    _ = y + (x + -x) := by rw [add_neg_cancel]
+    _ = (y + x) + -x := by rw [add_assoc]
+    _ = (x + y) + -x := by rw [add_comm x]
+    _ = (x + z) + -x := by rw [h]
+    _ = (z + x) + -x := by rw [add_comm z]
+    _ = z + (x + -x) := by rw [add_assoc]
+    _ = z + 0 := by rw [add_neg_cancel]
+    _ = z := by rw [add_zero])
+    (fun h => by rw [h])
 theorem add_id_unique : x + y = x → y = 0 :=
   sorry
 theorem add_id_inv : x + y = 0 → x = -y :=
@@ -48,3 +59,8 @@ theorem neg_mul_eqs : -x * y = -(x * y) ∧ -(x * y) = x * -y :=
   sorry
 theorem neg_mul_neg_eq_pos : -x * -y = x * y :=
   sorry
+
+section
+
+-- Archimedian property (assumed in this section)
+end
