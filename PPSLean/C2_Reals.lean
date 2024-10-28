@@ -38,7 +38,9 @@ theorem add_id_unique : x + y = x → y = 0 :=
     have h₁ : x + y = x + 0 := by rw [h₀, add_zero]
     (add_cancel_left F x y 0).mp h₁
 theorem add_id_inv : x + y = 0 → x = -y :=
-  sorry
+  fun h₀ : x + y = 0 =>
+    have h₁ : y + x = y + -y := by rw [add_neg_cancel, add_comm]; exact h₀
+    (add_cancel_left F y x (-y)).mp h₁
 theorem neg_neg_eq : -(-x) = x :=
   sorry
 
