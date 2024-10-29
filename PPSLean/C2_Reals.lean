@@ -42,8 +42,15 @@ theorem add_id_inv : x + y = 0 → x = -y :=
     have h₁ : y + x = y + -y := by rw [add_neg_cancel, add_comm]; exact h₀
     (add_cancel_left F y x (-y)).mp h₁
 theorem neg_neg_eq : -(-x) = x :=
-  sorry
+  have h₀ : -x + -(-x) = -x + x := by rw [add_comm (-x) x, add_neg_cancel, add_neg_cancel]
+  (add_cancel_left F (-x) (-(-x)) x).mp h₀
 
+/-
+(have h₀ := (calc (-x + -(-x))
+  _ = 0 := by rw [add_neg_cancel]
+  _ = (x + -x) := by rw [add_neg_cancel]
+  _ = (-x + x) := by rw [add_comm]))
+-/
 -- Proposition 2.2
 theorem mul_cancel_left : x ≠ 0 → (x * y = x * z ↔ y = z) :=
   sorry
