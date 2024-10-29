@@ -3,8 +3,6 @@
 import Mathlib.Algebra.Field.Basic
 
 -- Definition 2.1: Field
-#check Field
-
 #check add_comm
 #check add_assoc
 #check zero_add
@@ -13,7 +11,7 @@ import Mathlib.Algebra.Field.Basic
 #check mul_comm
 #check mul_assoc
 #check one_mul
-#check mul_inv_cancel
+#check Field.mul_inv_cancel
 #check mul_add
 
 variable (F : Type*) [Field F]
@@ -45,15 +43,21 @@ theorem neg_neg_eq : -(-x) = x :=
   have h₀ : -x + -(-x) = -x + x := by rw [add_comm (-x) x, add_neg_cancel, add_neg_cancel]
   (add_cancel_left F (-x) (-(-x)) x).mp h₀
 
-/-
-(have h₀ := (calc (-x + -(-x))
-  _ = 0 := by rw [add_neg_cancel]
-  _ = (x + -x) := by rw [add_neg_cancel]
-  _ = (-x + x) := by rw [add_comm]))
--/
 -- Proposition 2.2
 theorem mul_cancel_left : x ≠ 0 → (x * y = x * z ↔ y = z) :=
-  sorry
+  fun h₀ =>
+    Iff.intro
+      (fun h₁ => calc
+        y = y * 1 := by rw [mul_comm, one_mul]
+        _ = y * (x * x⁻¹) := by rw [Field.mul_inv_cancel x h₀]
+        _ = (y * x) * x⁻¹ := by rw [mul_assoc]
+        _ = (x * y) * x⁻¹ := by rw [mul_comm x]
+        _ = (x * z) * x⁻¹ := by rw [h₁]
+        _ = z * (x * x⁻¹) := by rw [mul_comm x, mul_assoc]
+        _ = z * 1 := by rw [Field.mul_inv_cancel x h₀]
+        _ = z := by rw [mul_one])
+      (fun h₁ => by rw [h₁])
+
 theorem mul_id_unique : x ≠ 0 → x * y = x → y = 1 :=
   sorry
 theorem mul_id_inv : x ≠ 0 → x * y = 1 → y = x⁻¹ :=
