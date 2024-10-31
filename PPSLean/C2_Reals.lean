@@ -31,14 +31,17 @@ theorem add_cancel_left : x + y = x + z ↔ y = z :=
     _ = z + 0 := by rw [add_neg_cancel]
     _ = z := by rw [add_zero])
     (fun h => by rw [h])
+
 theorem add_id_unique : x + y = x → y = 0 :=
   fun h₀ : x + y = x =>
     have h₁ : x + y = x + 0 := by rw [h₀, add_zero]
     (add_cancel_left F x y 0).mp h₁
+
 theorem add_id_inv : x + y = 0 → x = -y :=
   fun h₀ : x + y = 0 =>
     have h₁ : y + x = y + -y := by rw [add_neg_cancel, add_comm]; exact h₀
     (add_cancel_left F y x (-y)).mp h₁
+
 theorem neg_neg_eq : -(-x) = x :=
   have h₀ : -x + -(-x) = -x + x := by rw [add_comm (-x) x, add_neg_cancel, add_neg_cancel]
   (add_cancel_left F (-x) (-(-x)) x).mp h₀
@@ -59,7 +62,11 @@ theorem mul_cancel_left : x ≠ 0 → (x * y = x * z ↔ y = z) :=
       (fun h₁ => by rw [h₁])
 
 theorem mul_id_unique : x ≠ 0 → x * y = x → y = 1 :=
-  sorry
+  fun h₀ =>
+    fun h₁ : x * y = x =>
+      have h₂ : x * y = x * 1 := by rw [mul_comm x 1, one_mul, h₁]
+      (mul_cancel_left F x y 1 h₀).mp h₂
+
 theorem mul_id_inv : x ≠ 0 → x * y = 1 → y = x⁻¹ :=
   sorry
 theorem inv_inv_eq : x ≠ 0 → (x⁻¹)⁻¹ = x :=
