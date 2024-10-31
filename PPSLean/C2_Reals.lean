@@ -68,7 +68,11 @@ theorem mul_id_unique : x ≠ 0 → x * y = x → y = 1 :=
       (mul_cancel_left F x y 1 h₀).mp h₂
 
 theorem mul_id_inv : x ≠ 0 → x * y = 1 → y = x⁻¹ :=
-  sorry
+  fun h₀ =>
+    fun h₁ : x * y = 1 =>
+      have h₂ : x * y = x * x⁻¹ := by rw [h₁, ← Field.mul_inv_cancel x h₀]
+      (mul_cancel_left F x y x⁻¹ h₀).mp h₂
+
 theorem inv_inv_eq : x ≠ 0 → (x⁻¹)⁻¹ = x :=
   sorry
 
